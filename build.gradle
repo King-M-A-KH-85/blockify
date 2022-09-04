@@ -8,8 +8,8 @@ buildscript {
 
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:" + Versions.nav_version
-        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.21'
     }
+
     ext {
         jvmTarget = '11'
     }
@@ -24,13 +24,3 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-//subprojects {
-//    plugins.withId("com.android.application") {
-//        configureBaseExtension()
-//    }
-//    plugins.withId("com.android.library") {
-//        configureBaseExtension()
-//    }
-//}
-

@@ -3,10 +3,7 @@ import java.util.regex.Pattern
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'androidx.navigation.safeargs'
 }
-
-apply plugin: 'AndResGuard'
 
 android {
     compileSdk Versions.compileSdkVersion
@@ -21,7 +18,11 @@ android {
         versionName Versions.versionName + "-" + System.currentTimeMillis()
 
         multiDexEnabled true
-        vectorDrawables.useSupportLibrary = true
+
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
 
         validateVersionName(versionName)
@@ -74,15 +75,16 @@ android {
 
     sourceSets.main.jniLibs.srcDirs = ['./jni/']
 
-    externalNativeBuild {
-        cmake {
+//    externalNativeBuild {
+//        cmake {
 //            path 'jni/CMakeLists.txt'
-        }
-    }
+//        }
+//    }
 
     dexOptions {
         jumboMode = true
     }
+
     lint {
         abortOnError false
         disable 'VectorPath', 'NestedWeights', 'ContentDescription', 'SmallSp'
@@ -112,6 +114,11 @@ android {
     buildFeatures {
         viewBinding true
         dataBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.compose_version
     }
 
     dependenciesInfo {
@@ -124,6 +131,9 @@ android {
     }
 
     packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
         jniLibs {
             useLegacyPackaging = true
         }
@@ -141,61 +151,6 @@ android {
 
         }
     }
-
-//    project.gradle.addBuildListener(new BuildListener() {
-//        @Override
-//        void settingsEvaluated(Settings settings) {
-//        }
-//
-//        @Override
-//        void projectsLoaded(Gradle gradle) {
-//
-//        }
-//
-//        @Override
-//        void projectsEvaluated(Gradle gradle) {
-//            File stringFile = new File("${projectDir}/src/main/res/values/strings.xml")
-////            stringFile.write(stringFile.getText('UTF-8').replace("", ""), 'UTF-8')
-////            gradle.getGradleVersion()
-//
-//            File file = new File("${projectDir}/src/main/assets/repos.txt");
-//            file.createNewFile()
-//
-//            FileWriter fileWriter = null;
-//            String str = repositories.each { str += "Name: " + it.name + "; url: " + it.url + "\n" }
-//
-////            gradle.rootProject.repositories.each { str += "Name: " + it.name + "; url: " + it.url + "\n" }
-////            str = gradle.rootProject.repositories.get(0)
-//            try {
-//                fileWriter = new FileWriter("${projectDir}/src/main/assets/repos.txt", false);
-//                fileWriter.write(str);
-//                fileWriter.flush();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } finally {
-//                try {
-//                    if (fileWriter != null)
-//                        fileWriter.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        @Override
-//        void buildFinished(BuildResult result) {
-////            File stringFile = new File("${projectDir}/src/main/res/values/strings.xml")
-////            stringFile.write(stringFile.getText('UTF-8').replace("", ""), 'UTF-8')
-//        }
-//    })
-
-    gradle.afterProject { project ->
-        if (project.state.failure) {
-            println "Evaluation of $project FAILED"
-        } else {
-            println "Evaluation of $project succeeded"
-        }
-    }
 }
 
 dependencies {
@@ -203,50 +158,39 @@ dependencies {
     // Dependency on local binaries
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    // default libraris
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.7.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+
+
+    // compos
+    implementation "androidx.compose.ui:ui:" + Versions.compose_version
+    implementation 'androidx.compose.material3:material3:1.0.0-beta01'
+    implementation "androidx.compose.ui:ui-tooling-preview:" + Versions.compose_version
+    implementation 'androidx.activity:activity-compose:1.5.1'
 
     // multi dex
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    // new implements
+    // for materialYou
     implementation 'androidx.palette:palette:1.0.0'
 
     // testing libraries
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-}
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:" + Versions.compose_version
 
-task versionName {
-    doLast {
-        println android.defaultConfig.versionName
-    }
+    // debug libraries
+    debugImplementation "androidx.compose.ui:ui-tooling:" + Versions.compose_version
+    debugImplementation "androidx.compose.ui:ui-test-manifest:" + Versions.compose_version
 }
 
 static def validateVersionName(String versionName) {
     if (!Pattern.matches("^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?\$", versionName))
         throw new GradleException("The versionName '" + versionName + "' is not a valid version as per semantic version '2.0.0' spec in the format 'major.minor.patch(-prerelease)(+buildmetadata)'. https://semver.org/spec/v2.0.0.html.")
-}
-
-andResGuard {
-    mappingFile = file("./resource_mapping.txt")
-    use7zip = true
-    useSign = true
-    keepRoot = false
-    mergeDuplicatedRes = true
-
-    whiteList = ["io.blockify.R.mipmap.ic_launcher", "ir.blockify.R.string.com.crashlytics.*", "ir.blockify.R.id.*"]
-
-    compressFilePattern = ["*.png", "*.jpg", "*.jpeg", "*.gif", "resources.arsc"]
-
-    finalApkBackupPath = "${project.rootDir}/final.apk"
-    digestalg = "SHA-256"
 }
 
 configurations {
