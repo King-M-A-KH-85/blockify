@@ -5,10 +5,13 @@ buildscript {
         maven { url 'https://jitpack.io' }
         mavenCentral()
     }
+
     dependencies {
-        def nav_version = "2.5.0"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:" + Versions.nav_version
         classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.21'
+    }
+    ext {
+        jvmTarget = '11'
     }
 }
 
@@ -18,24 +21,16 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
 }
 
-//allprojects {
-//    apply from: "$rootDir/gradle/dependencies.gradle"
-//
-//    repositories {
-//        google()
-//        maven { url 'https://jitpack.io' }
-//        maven {
-//            url 'https://repo.gradle.org/gradle/libs-releases/'
-//        }
-//        mavenCentral()
-//    }
-//}
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext {
-    compileSdkVersion = 28
-    supportLibVersion = "28.0.0"
-}
+//subprojects {
+//    plugins.withId("com.android.application") {
+//        configureBaseExtension()
+//    }
+//    plugins.withId("com.android.library") {
+//        configureBaseExtension()
+//    }
+//}
+

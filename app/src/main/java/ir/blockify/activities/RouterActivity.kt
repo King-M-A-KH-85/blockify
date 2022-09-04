@@ -11,8 +11,7 @@ class RouterActivity : AppCompatActivity() {
 //            goActivity(MainActivity::class.java)
 //        else
 //            goActivity(SingActivity::class.java)
-
-        goActivity(AboutActivity::class.java)
+        goActivity(MaterialYouActivity::class.java)
         super.onCreate(savedInstanceState)
     }
 

@@ -10,22 +10,21 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Blockify"
         tools:targetApi="31">
-
-        <!--        <activity-->
-        <!--            android:name=".activities.RouterActivity"-->
-        <!--            android:exported="true"-->
-        <!--            android:label="@string/app_name"-->
-        <!--            android:theme="@style/Theme.Blockify">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-
+         <activity
+         android:name=".activities.RouterActivity"
+         android:exported="true"
+         android:label="@string/app_name"
+         android:theme="@style/Theme.Blockify">
+         <intent-filter>
+         <action android:name="android.intent.action.MAIN" />
+         <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+         </activity>
         <meta-data
             android:name="SamsungBasicInteraction"
             android:value="SEP10" />
@@ -33,29 +32,10 @@
             android:name="com.samsung.android.icon_container.has_icon_container"
             android:value="true" />
 
-        <activity
-            android:name=".activities.SplashActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Blockify">
-            <meta-data
-                android:name="com.sec.android.app.launcher.icon_theme" android:value="themeColor"/>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activities.OneUiActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
-
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.SwitchBarActivity" />
-        <activity android:name=".activities.AboutActivity" />
-        <activity android:name=".activities.MaterialYouActivity" /> <!-- -->
+        <activity android:name=".activities.MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+        <activity android:name=".activities.MaterialYouActivity" /> <!--  -->
         <activity android:name=".activities.SingActivity" />
-
         <activity
             android:name=".crash.activity.DefaultErrorActivity"
             android:process=":error_activity" />

@@ -19,10 +19,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
+
+import ir.blockify.Application;
 import ir.blockify.R;
 import ir.blockify.crash.config.CrashConfig;
 import ir.blockify.preference.WindowPreference;
-import ir.blockify.utils.AppUtils;
 
 public final class DefaultErrorActivity extends AppCompatActivity {
 
@@ -73,7 +74,7 @@ public final class DefaultErrorActivity extends AppCompatActivity {
 		if (clipboard != null) {
 			ClipData clip = ClipData.newPlainText("Error Information", errorInformation);
 			clipboard.setPrimaryClip(clip);
-			AppUtils.showToast(this, "Copied");
+			Application.showToast("Copied");
 		}
 	}
 

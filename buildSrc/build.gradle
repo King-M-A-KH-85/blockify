@@ -1,0 +1,10 @@
+plugins {
+    id "base"
+}
+
+repositories {
+    google()
+    gradlePluginPortal()
+    mavenCentral()
+}
+

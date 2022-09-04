@@ -23,11 +23,11 @@ public class MaterialYouActivity extends AppCompatActivity implements Toolbar.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         setupWindow();
-        materialToolbar = findViewById(R.id.mt);
-        materialToolbar.setNavigationOnClickListener((v) -> finish());
-        materialToolbar.setOnMenuItemClickListener(this);
-
-        throw new RuntimeException("test");
+//        materialToolbar = findViewById(R.id.mt);
+//        materialToolbar.setNavigationOnClickListener((v) -> finish());
+//        materialToolbar.setOnMenuItemClickListener(this);
+//
+//        throw new RuntimeException("test");
     }
 
     @Override
@@ -47,9 +47,7 @@ public class MaterialYouActivity extends AppCompatActivity implements Toolbar.On
     }
 
     private void setupWindow() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            new WindowPreference(this).applyEdgeToEdgePreference(getWindow(), getColor(R.color.colorSurface));
-        }
+        new WindowPreference(this).applyEdgeToEdgePreference(getWindow(), getColor(R.color.colorSurface));
         Application.addSystemWindowInsetToPadding(getWindow().getDecorView(), false, true, false, true);
     }
 }
