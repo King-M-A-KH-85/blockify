@@ -3,25 +3,24 @@ package ir.blockify;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatDelegate;
+
+import androidx.annotation.RequiresApi;
+//import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.multidex.MultiDexApplication;
 
 import java.net.InetAddress;
-import java.util.Calendar;
-
-import ir.tapsell.sdk.Tapsell;
 
 public class Application extends MultiDexApplication {
     public static Application INSTANCE;
-    private static final String TASSEL_KEY = "lsharpqrpmmellkbmmlebnipqmlirlsbltqhbrsjpcspqnohepplhkcrrpenrtdbijapls";
 
     @Override
     public void onCreate() {
@@ -29,10 +28,8 @@ public class Application extends MultiDexApplication {
         // create static instance from App
         INSTANCE = this;
 
-        // initialize adds
-        Tapsell.initialize(this, TASSEL_KEY);
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 
     public static boolean isNetworkConnected() {
@@ -122,6 +119,7 @@ public class Application extends MultiDexApplication {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     public static int getNavigationBarHeight(Context context) {
         DisplayMetrics metrics = new DisplayMetrics();
         context.getDisplay().getMetrics(metrics);
@@ -132,22 +130,6 @@ public class Application extends MultiDexApplication {
             return realHeight - usableHeight;
         else
             return 0;
-    }
-
-    public static String greetingText() {
-        Calendar cal = Calendar.getInstance();
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        if (hour >= 10 && hour < 15) {
-            return "Hallo, Selamat Siang!";
-        } else if (hour >= 15 && hour < 18) {
-            return "Hallo, Selamat Sore!";
-        } else if (hour == 18) {
-            return "Hallo, Selamat Petang!";
-        } else if (hour >= 19 && hour < 24) {
-            return "Hallo, Selamat Malam!";
-        } else {
-            return "Hallo, Selamat Pagi!";
-        }
     }
 
     public static boolean isDarkTheme() {

@@ -1,5 +1,7 @@
+import org.gradle.kotlin.dsl.`kotlin-dsl`
+
 plugins {
-    id "base"
+    `kotlin-dsl`
 }
 
 repositories {
@@ -7,4 +9,3 @@ repositories {
     gradlePluginPortal()
     mavenCentral()
 }
-
