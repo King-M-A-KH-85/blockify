@@ -3,47 +3,105 @@ package ir.blockify.activities
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ir.blockify.ui.theme.MyApplicationTheme
+import ir.blockify.ui.theme.MainActivityTheme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            MyApplicationTheme {
+            MainActivityTheme {
+
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    var showMenu by remember { mutableStateOf(false) }
+
+                    Scaffold(
+                        topBar = {
+                            CenterAlignedTopAppBar(
+                                title = { Text("Blockify") },
+                                navigationIcon = {
+                                    IconButton(onClick = {
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Menu,
+                                            contentDescription = "Localized description"
+                                        )
+                                    }
+                                }, actions = {
+                                    IconButton(onClick = { /*TODO*/ }) {
+                                        Icon(Icons.Default.Favorite, contentDescription = "")
+                                    }
+                                    IconButton(onClick = { showMenu = !showMenu }) {
+                                        Icon(Icons.Default.MoreVert, contentDescription = "")
+                                    }
+                                    DropdownMenu(
+                                        expanded = showMenu,
+                                        onDismissRequest = { showMenu = false }
+                                    ) {
+                                        DropdownMenuItem(text = {
+                                            Icon(
+                                                Icons.Filled.Refresh,
+                                                contentDescription = ""
+                                            )
+                                        }, onClick = { /*TODO*/ })
+                                        DropdownMenuItem(text = {
+                                            Icon(
+                                                Icons.Filled.Call,
+                                                contentDescription = ""
+                                            )
+                                        }, onClick = { /*TODO*/ })
+                                    }
+                                }
+
+                            )
+                        }, content = {
+                            Column(
+                                modifier = Modifier
+                                    .padding(it)
+                                    .fillMaxSize()
+                            ) {
+                                BottomAppBar() {
+                                    NavigationBarItem(
+                                        selected = true,
+                                        onClick = { /*TODO*/ },
+                                        icon = {
+                                            Icon(
+                                                Icons.Filled.Call,
+                                                contentDescription = ""
+                                            )
+                                        })
+                                    NavigationBarItem(
+                                        selected = false,
+                                        onClick = { /*TODO*/ },
+                                        icon = {
+                                            Icon(
+                                                Icons.Filled.Refresh,
+                                                contentDescription = ""
+                                            )
+                                        })
+                                }
+                            }
+                        }
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    val datas : List<String> = ArrayList()
-    
-    for (data in datas) {
-        Text(text = data)
-    }
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-//@Preview()
-@Composable
-fun DefaultPreview() {
-    MaterialTheme {
-        Greeting("Android")
     }
 }

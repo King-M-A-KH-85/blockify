@@ -33,6 +33,7 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import ir.blockify.activities.ErrorActivity;
 import ir.blockify.crash.config.CrashConfig;
 
 public final class CrashActivity {
@@ -426,7 +427,7 @@ public final class CrashActivity {
         Class<? extends Activity> resolvedActivityClass;
         resolvedActivityClass = getErrorActivityClassWithIntentFilter(context);
         if (resolvedActivityClass == null) {
-            resolvedActivityClass = DefaultErrorActivity.class;
+            resolvedActivityClass = ErrorActivity.class;
         }
         return resolvedActivityClass;
     }

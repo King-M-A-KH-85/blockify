@@ -1,5 +1,4 @@
 import org.gradle.internal.classpath.Instrumented
-import org.jetbrains.kotlin.config.JvmTarget.*
 
 plugins {
     id(BuildPlugins.androidApplication)
@@ -98,9 +97,9 @@ android {
 //    }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_HIGHER
-        targetCompatibility = JavaVersion.VERSION_HIGHER
-        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+//        isCoreLibraryDesugaringEnabled = true
     }
 
 //    externalNativeBuild {
@@ -133,7 +132,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JVM_18.toString()
+        jvmTarget = "1.8"
     }
 
     buildFeatures {
@@ -143,7 +142,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeVersion
+        kotlinCompilerExtensionVersion = "1.3.1"
     }
 
     dependenciesInfo {
@@ -178,9 +177,6 @@ dependencies {
     testImplementation(AppDependencies.testLibraries)
     androidTestImplementation(AppDependencies.androidTestLibraries)
     debugImplementation(AppDependencies.debugLibraries)
-
-    // custom dependenct adding
-    implementation("androidx.appcompat:appcompat:1.5.1")
 
     // create libraries copy-right
     createCopyright()

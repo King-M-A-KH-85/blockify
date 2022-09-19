@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CodeEditorDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="CodeEditorDialog" parent="MaterialAlertDialog.Material3">
         <item name="colorOnSurface">#FFFEFEFE</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
@@ -8,7 +8,7 @@
     </style>
 
 
-    <style name="PositiveButtonStyle" parent="@style/Widget.MaterialComponents.Button">
+    <style name="PositiveButtonStyle" parent="@style/Widget.Material3.Button">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:background">@android:color/transparent</item>
     </style>

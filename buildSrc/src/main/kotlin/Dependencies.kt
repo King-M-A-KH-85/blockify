@@ -36,32 +36,25 @@ fun DependencyHandler.debugImplementation(list: List<String>) {
 }
 
 fun createCopyright() {
+    val path = "./app/src/main/assets/libraries-copy-right"
+
+    FileWriter(path, false).use { fileWriter ->
+        fileWriter.write("")
+        fileWriter.flush()
+    }
+
     dependencies.forEach {
-        val copyRightFile = File("./CopyRight.txt")
+        val copyRightFile = File(path)
         copyRightFile.createNewFile()
         try {
-            FileWriter("./CopyRight.txt", true).use { fileWriter ->
+            FileWriter(path, true).use { fileWriter ->
                 fileWriter.append("$it\n")
                 fileWriter.flush()
             }
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
-        println("@copy-right created successful")
     }
-}
 
-data class Dependency(
-    val type: String,
-    val group: String,
-    val depName: String,
-    val domain: String
-) {
-    object Types {
-        const val implementation = "implementation"
-        const val androidTestImplementation = "androidTestImplementation"
-        const val testImplementation = "testImplementation"
-        const val debugImplementation = "debugImplementation"
-    }
+    println("copy-right created successful")
 }
